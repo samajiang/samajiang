@@ -136,4 +136,8 @@ public class AdminService {
 
     }
 
+    public Admin fetchuserbyname(String username) {
+        Admin user = adminMapper.fetchuserbyname(username);
+        return user;
+    }
 }

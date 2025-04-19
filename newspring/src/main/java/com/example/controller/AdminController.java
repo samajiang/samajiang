@@ -190,4 +190,11 @@ public class AdminController {
     }
 
 
+//通过用户名查用户信息
+    @GetMapping("/fetchuserbyname/{username}")
+    public Result fetchuserbyname(@PathVariable String username){
+        Admin user = adminService.fetchuserbyname(username);
+        return Result.success(user);
+    }
+
 }

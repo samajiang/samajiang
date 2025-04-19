@@ -2,8 +2,8 @@
   <div>
     <el-container>
       <el-header style="background-color: #3d4349">
-        <img src="@/assets/logo.png" alt="" style="width:40px;position:relative; top:10px"/>
-        <span style="font-size: 20px;margin-left: 15px;color: white">管理系统</span>
+        <img src="@/assets/vaccine.png" alt="" style="width:40px;position:relative; top:10px"/>
+        <span style="font-size: 20px;margin-left: 15px;color: white">儿童疫苗接种平台后台管理系统</span>
 
         <el-dropdown style="float: right;height: 60px;line-height: 60px">
   <span class="el-dropdown-link" style="color: aliceblue;font-size: 20px">

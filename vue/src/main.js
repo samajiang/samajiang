@@ -4,10 +4,13 @@ import router from './router'
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
 import vue from "vue";
-import '@/assets/global.css'
+// 完整引入
+import * as echarts from 'echarts';
+import '@/assets/global.css';
 
 Vue.config.productionTip = false
 vue.use(ElementUI);
+vue.use(echarts);
 
 new Vue({
   router,

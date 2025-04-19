@@ -41,8 +41,8 @@ public class GonggaoController {
         System.out.println(list.size());
         if(gongGao.getGonggao_id()!=null){
             gonggaoService.updatagonggao(gongGao);
-        }else if(list.size()>3){
-            return Result.error("公告最多添加四个");
+        }else if(list.size()>9){
+            return Result.error("公告最多添加10个");
         }else {
             gonggaoService.addgonggao(gongGao);
         }

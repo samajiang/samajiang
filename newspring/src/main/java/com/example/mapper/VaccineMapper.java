@@ -26,4 +26,6 @@ public interface VaccineMapper extends Mapper<Vaccine> {
 
 @Select("select * from vaccineinfo where vaccine_name = #{vaccinename}")
     Vaccine searchbyname(@Param("vaccinename") String vaccinename);
+@Select("select * from vaccineinfo")
+    List<Vaccine> fetchbievaccine();
 }

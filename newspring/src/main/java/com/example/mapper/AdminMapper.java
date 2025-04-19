@@ -53,4 +53,6 @@ public interface AdminMapper extends Mapper<Admin> {
         return user;
     }
 
+@Select("select * from userinfo where user_name = #{username}")
+    Admin fetchuserbyname(String username);
 }

@@ -57,4 +57,14 @@ public class VaccineService {
         Vaccine vaccine = vaccineMapper.searchbyname(vaccinename);
         return vaccine;
     }
+
+    public List<Vaccine> fetchbievaccine() {
+        List<Vaccine> bievaccine = vaccineMapper.fetchbievaccine();
+        return bievaccine;
+    }
+
+    public Vaccine searchbyname(String vaccinename) {
+        Vaccine va = vaccineMapper.searchbyname(vaccinename);
+        return va;
+    }
 }
