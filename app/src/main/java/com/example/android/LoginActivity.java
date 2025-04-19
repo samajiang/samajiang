@@ -59,10 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         LoginButton = findViewById(R.id.Login_Button);
         sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
         sharedPreferences2 = getSharedPreferences("user", MODE_PRIVATE);
-        if(s.isLoggedIn()){
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-        }else{
+
             LoginButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -97,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                     islogin = isChecked;
                 }
             });
-        }
+
 
 
     }

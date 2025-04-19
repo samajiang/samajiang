@@ -80,13 +80,13 @@ public class HomeFragment extends Fragment {
         //        使用设置轮播图方法
         setbanner();
         //        列表
-        newsData();
+//        newsData();
 
 //        下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                newsData();
+//                newsData();
                 setbanner();
                 swipeRefreshLayout.postDelayed(new Runnable() {
                     @Override

@@ -296,4 +296,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finishAffinity();
     }
+//    自定义方法：修改完用户数据后重启应用到登录页面
+    public void restartappforuserupdata(){
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finishAffinity();
+    }
 }

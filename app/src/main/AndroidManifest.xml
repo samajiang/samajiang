@@ -56,9 +56,6 @@
             android:name=".VaccineDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".UpdateUserActivity"
-            android:exported="false" />
-        <activity
             android:name=".DoctorAdviceActivity"
             android:exported="false" />
         <activity

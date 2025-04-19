@@ -17,6 +17,8 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.myhold>() {
     //    实例化这个接口
     private var longclick: onItemLongClick? = null
 
+    private var clicklistener:onItemclick? = null
+
     //从外部获取list传给orders
     @SuppressLint("NotifyDataSetChanged")
     fun setdata(lists: MutableList<Order>) {
@@ -40,6 +42,10 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.myhold>() {
         holder.itemView.setOnLongClickListener {
             longclick?.onItemLongClick(position)
             true
+        }
+//        点击编辑预约记录回调
+        holder.itemView.setOnClickListener {
+            clicklistener?.onItemclick(position)
         }
 
     }
@@ -82,6 +88,14 @@ class OrderAdapter : RecyclerView.Adapter<OrderAdapter.myhold>() {
     fun setOnItemLongClickListener(listener: onItemLongClick) {
         this.longclick = listener
     }
+//    设置点击接口
+    interface onItemclick{
+    fun onItemclick(position: Int)
+    }
+//    设置点击监听器
+fun setonItemclickListener(listener: onItemclick){
+    this.clicklistener = listener
+}
 
     //    根据position删除的方法
     fun deletebyposition(position: Int) {

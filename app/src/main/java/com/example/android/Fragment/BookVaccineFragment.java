@@ -19,11 +19,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.android.Adapter.OrderAdapter;
+import com.example.android.entity.Vaccine;
+import com.example.android.entity.VaccineRespone;
+import com.example.android.entity.Vaccineresult;
 import com.example.android.tool.BASEURL;
 import com.example.android.R;
 import com.example.android.entity.Order;
 import com.example.android.entity.OrderRES;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.IOException;
@@ -32,11 +36,14 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class BookVaccineFragment extends Fragment {
+    private UpdatabookDialog updatabookDialog;
     String nn = null;
     private RecyclerView recyclerView;
 //    private String BASE_URL = "http://192.168.1.101:8080/api/order/";
@@ -61,6 +68,17 @@ public class BookVaccineFragment extends Fragment {
           orderAdapter.notifyDataSetChanged();
         }
 
+//        点击修改记录逻辑
+        orderAdapter.setonItemclickListener(new OrderAdapter.onItemclick() {
+            @Override
+            public void onItemclick(int position) {
+                Order ooo = orderAdapter.fetchorderbyposition(position);
+                updatabookDialog = new UpdatabookDialog(getActivity(),ooo);
+                updatabookDialog.show(getActivity().getSupportFragmentManager(), "updatadialog");
+
+            }
+        });
+
 //        直接new一个监听器并在里边实现删除逻辑
         orderAdapter.setOnItemLongClickListener(new OrderAdapter.onItemLongClick() {
             @Override
@@ -74,6 +92,7 @@ public class BookVaccineFragment extends Fragment {
                 .setPositiveButton("删除",((dialogInterface, i) -> {
                     orderAdapter.deletebyposition(position);
                     deleteorderfromDB(n);
+                    fetchvaccineinfo(oo);
                     Toast.makeText(getContext(),"删除成功",Toast.LENGTH_SHORT).show();
                 }))
                 .setNegativeButton("取消",null)
@@ -177,6 +196,63 @@ public class BookVaccineFragment extends Fragment {
                 });
             }
         }).start();
+    }
+
+//    长按删除预约后疫苗数量+1
+    public void updatavaccinecount(Vaccine ordervaccine){
+Vaccine newvaccine = new Vaccine(ordervaccine.getVaccine_id(),
+        ordervaccine.getVaccine_name(),
+        ordervaccine.getVaccine_datil(),
+        ordervaccine.getBianhao(),
+        ordervaccine.getVaccine_pic(),
+        ordervaccine.getVaccine_count()+1);
+Gson gson = new Gson();
+String jsonvaccine = gson.toJson(newvaccine);
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody requestBody = RequestBody.create(jsonvaccine,mediaType);
+
+OkHttpClient client = new OkHttpClient();
+Request request = new Request.Builder()
+        .url(BASEURL.getBase_URL()+"vaccine/addvaccine")
+        .post(requestBody)
+        .build();
+client.newCall(request).enqueue(new Callback() {
+    @Override
+    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+    }
+
+    @Override
+    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+    }
+});
+    }
+
+//    获取疫苗信息
+    public void fetchvaccineinfo(Order order){
+        String vaccinename = order.getOrder_vaccine();
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(BASEURL.getBase_URL()+"vaccine/searvaccinebyname/"+vaccinename)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+               String body = response.body().string();
+                // 假设服务器返回的是JSON格式的列表
+                Type listType = new TypeToken<Vaccineresult>() {
+                }.getType();
+                Vaccineresult vaccineresult = new Gson().fromJson(body, listType);
+                Vaccine resvacc = vaccineresult.getData();
+                updatavaccinecount(resvacc);
+            }
+        });
     }
 
 

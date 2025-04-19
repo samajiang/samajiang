@@ -41,7 +41,6 @@ import com.example.android.tool.BASEURL;
 import com.example.android.LoginActivity;
 import com.example.android.MainActivity;
 import com.example.android.R;
-import com.example.android.UpdateUserActivity;
 import com.example.android.tool.SessionManager;
 
 import org.json.JSONObject;
@@ -68,6 +67,7 @@ import okhttp3.Response;
  * create an instance of this fragment.
  */
 public class MineFragment extends Fragment {
+    private UpdataUserDialog mupdatauserdilog;
     private Button denglubtn;
 
     private SharedPreferences sharedPreferences2;
@@ -114,6 +114,15 @@ public class MineFragment extends Fragment {
             loginOut.setVisibility(VISIBLE);
             denglubtn.setVisibility(INVISIBLE);
         }
+
+//        更新用户信息按钮
+        updateUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                  mupdatauserdilog = new UpdataUserDialog(getContext());
+                  mupdatauserdilog.show(getActivity().getSupportFragmentManager(),"updatauserdialog");
+            }
+        });
 
         denglubtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,9 +172,6 @@ public class MineFragment extends Fragment {
                             ((MainActivity)getActivity()).restartApp();
                             MainActivity mainActivity = (MainActivity) getActivity();
                             mainActivity.selectFragment(0);
-                            MenuItem menuItem = mainActivity.bottomNavigationView.getMenu().findItem(R.id.home);
-                            mainActivity.bottomNavigationView.performClick();
-                            menuItem.setChecked(true);
                             loginOut.setVisibility(INVISIBLE);
                             denglubtn.setVisibility(VISIBLE);
                             touxiang.setImageResource(R.mipmap.ic_launcher);
@@ -179,14 +185,7 @@ public class MineFragment extends Fragment {
             }
         });
 
-//        信息修改页面跳转
-        updateUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), UpdateUserActivity.class);
-                startActivity(intent);
-            }
-        });
+
 
 
 //        从登录界面保存的账号中取得用户名字
@@ -489,9 +488,6 @@ public class MineFragment extends Fragment {
                     }
                 } else {
                     getActivity().runOnUiThread(() -> {
-                        Toast.makeText(getContext(),
-                                "获取头像失败la: " + response.message() + response.code(),
-                                Toast.LENGTH_SHORT).show();
                         touxiang.setImageResource(R.mipmap.ic_launcher);
                     });
                 }

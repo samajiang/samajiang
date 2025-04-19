@@ -15,3 +15,9 @@ class ResultD(
     val data:Vaccine
 )
 
+class userResult(
+    val code:Int,
+    val msg:String? = null,
+    val data:UserInfo
+)
+
